@@ -84,7 +84,7 @@
           return 'El numero de telefono debe de ser de al menos nueve digitos.'
         },
         email (value) {
-          if (/^[a-z.-]+@[a-z.-]+\.[a-z]+$/i.test(value)) return true
+          if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/i.test(value)) return true
   
           return 'Correo debe de ser valido.'
         },
@@ -116,11 +116,16 @@
     const envioValido = ref(false)
   
     const submit =  handleSubmit(async values => {
-      const formValue = JSON.stringify(values)
-      const response = await axios.post('http://localhost:5000/ingresar', formValue )
+      try {
+        const formValue = JSON.stringify(values)
+        const response = await axios.post('http://localhost:5000/ingresar', formValue )
+        
+        if(response.data.success)
+          envioValido.value = true
+        handleReset()
+      } catch (error) {
+        console.error('error', error)
+      }
       
-      if(response.data.success)
-        envioValido.value = true
-      handleReset()
     })
   </script>

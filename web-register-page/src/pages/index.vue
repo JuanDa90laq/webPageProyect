@@ -19,8 +19,12 @@
   let data = ref({})
 
   const fetchData = async () => {
-    const response = await axios.get('http://localhost:5000/')
-    data.value = response.data
+    try {
+      const response = await axios.get('http://localhost:5000/')
+      data.value = response.data
+    } catch (error) {
+      console.error('error', error)
+    }
   }
  
   fetchData()
