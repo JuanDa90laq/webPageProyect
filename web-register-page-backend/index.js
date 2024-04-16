@@ -1,4 +1,5 @@
 import express from "express"
+import sql from './db.js'
 
 const app = express()
 app.use(express.json())
@@ -31,13 +32,13 @@ const personas = [
   new Persona(10, 'Isabela', 31, 'Villavicencio')
 ];
 
-const buscarPersona = (id) => {
-  const personaEncontrada = Persona.buscarPorId(id, personas);
-  if (personaEncontrada) {
-    return personaEncontrada
-  } else {
-    return null
-  }
+const buscarPersona = async (name) => {
+  const user = await sql`
+    select name, age
+    from public.emp_data
+    where name = ${name}
+  `
+  return user
 };
 
 app.get('/', (req, res) => {
@@ -57,11 +58,11 @@ app.post('/ingresar', (req, res) => {
   res.json({success: true, message: 'Datos enviados correctamente'})
 })
 
-app.get('/consult', (req, res) => {
+app.get('/consult', async (req, res) =>  {
   res.header("Access-Control-Allow-Origin", "*");
-  const id = req.query.id
-  console.log('este es el id que me llega del frontend', id)
-  const persona = buscarPersona(id)
+  const name = req.query.name
+  console.log('este es el id que me llega del frontend', name)
+  const persona = await buscarPersona(name)
   console.log('aca estamos devolviendo la persona con el mismo id', persona)
   res.json({success: true, data: persona})
 })
