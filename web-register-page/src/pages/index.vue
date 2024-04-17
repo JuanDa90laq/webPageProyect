@@ -3,10 +3,10 @@
     <v-img
       :width="500"
       class="mb-5"
-      :src="data.imagen"
+      :src="data.Image"
     ></v-img>
     <span>
-      {{ data.text }}
+      {{ data.Text }}
     </span>
   </div>
 </template> 
