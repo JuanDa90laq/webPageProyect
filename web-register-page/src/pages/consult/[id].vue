@@ -19,13 +19,16 @@
     <div class="pa-5">
       <div class="d-flex flex-column">
         <div>
-          <span>Nombre:</span> {{ data.nombre }}
+          <span>Nombre:</span> {{ data.Name }}
         </div>
         <div>
-          <span>Edad:</span> {{ data.edad }}
+          <span>Telefono:</span> {{ data.Phone }}
         </div>
         <div>
-          <span>Ciudad:</span> {{ data.ciudad }}
+          <span>Pais:</span> {{ data.Country }}
+        </div>
+        <div>
+          <span>Correo:</span> {{ data.Email }}
         </div>
       </div>
     </div>
@@ -41,7 +44,7 @@
     let noData = ref(false)
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/consult?id=${route.params.id}`)
+        const response = await axios.get( import.meta.env.VITE_API_BASE_URL+`consult?id=${route.params.id}`)
         if (response.data.data){
           data.value = response.data.data
           noData.value = false

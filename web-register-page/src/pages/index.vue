@@ -20,7 +20,7 @@
 
   const fetchData = async () => {
     try {
-      const response = await axios.get('https://webpageproyect.onrender.com/')
+      const response = await axios.get(import.meta.env.VITE_API_BASE_URL)
       data.value = response.data
     } catch (error) {
       console.error('error', error)

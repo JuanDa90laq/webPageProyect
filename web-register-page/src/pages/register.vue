@@ -117,8 +117,19 @@
   
     const submit =  handleSubmit(async values => {
       try {
-        const formValue = JSON.stringify(values)
-        const response = await axios.post('http://localhost:5000/ingresar', formValue )
+
+        const user = {
+          name: values.name,
+          phone: values.phone,
+          email: values.email,
+          country: values.select
+        }
+        
+        const response = await axios.post(import.meta.env.VITE_API_BASE_URL+'ingresar', user, {
+          headers: {
+            'Access-Control-Allow-Origin': '*'
+          }
+        } )
         
         if(response.data.success)
           envioValido.value = true
